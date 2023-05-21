@@ -233,3 +233,148 @@ public:
 
 
 ```
+
+Another solution in python,
+
+```cpp
+def is_valid(board, row, col, num):
+    # Check if the number is already used in the row
+    for i in range(9):
+        if board[row][i] == num:
+            return False
+
+    # Check if the number is already used in the column
+    for i in range(9):
+        if board[i][col] == num:
+            return False
+
+    # Check if the number is already used in the 3x3 box
+    start_row = (row // 3) * 3
+    start_col = (col // 3) * 3
+    for i in range(3):
+        for j in range(3):
+            if board[start_row + i][start_col + j] == num:
+                return False
+
+    return True
+
+def solve_sudoku(board):
+    for row in range(9):
+        for col in range(9):
+            # Find the next empty cell
+            if board[row][col] == 0:
+                # Try all possible numbers from 1 to 9
+                for num in range(1, 10):
+                    if is_valid(board, row, col, num):
+                        # If the number is valid, assign it to the cell
+                        board[row][col] = num
+
+                        # Recursively solve the rest of the puzzle
+                        if solve_sudoku(board):
+                            return True
+
+                        # If the current assignment leads to an invalid solution,
+                        # backtrack by undoing the assignment
+                        board[row][col] = 0
+
+                # If no number from 1 to 9 works, the puzzle is unsolvable
+                return False
+
+    # If all cells are filled, the puzzle is solved
+    return True
+
+# Function to display the Sudoku board
+def display_board(board):
+    for row in board:
+        print(row)
+
+# Function to get user input for the Sudoku puzzle
+def get_user_input():
+    board = []
+    print("Enter the Sudoku puzzle (9 rows, each row containing 9 numbers, use 0 for empty cells):")
+    for _ in range(9):
+        row = list(map(int, input().split()))
+        board.append(row)
+    return board
+
+# Get user input for the Sudoku puzzle
+puzzle = get_user_input()
+
+print("Sudoku puzzle:")
+display_board(puzzle)
+
+# Solve the Sudoku puzzle
+if solve_sudoku(puzzle):
+    print("\nSudoku puzzle solved:")
+    display_board(puzzle)
+else:
+    print("\nNo solution exists for the Sudoku puzzle.")
+
+```cpp
+
+def is_valid(board, row, col, num):
+# Check if the number is already used in the row   
+for i in range(9):
+        if board[row][i] == num: 
+            return False
+# Check if the number is already used in the column 
+for i in range(9):
+        if board[i][col] == num:
+            return False
+# Check if the number is already used in the 3x3 box
+start_row = (row // 3) * 3
+start_col = (col // 3) * 3   
+for i in range(3):     
+        for j in range(3):
+             if board[start_row + i][start_col + j] == num:
+                return False 
+        return True
+
+
+def solve_sudoku(board):
+        for row in range(9):
+                for col in range(9):       # Find the next empty cell
+                        if board[row][col] == 0: # Try all possible numbers from 1 to 9
+
+                for num in range(1, 10):
+                        if is_valid(board, row, col, num):
+                        # If the number is valid, assign it to the cell
+                                board[row][col] = num    # Recursively solve the rest of the puzzle
+
+                                if solve_sudoku(board):
+                                        returnTrue                   
+                                        # If the current assignment leads to an invalid solution,
+                                        # backtrack by undoing the assignment
+                                        board[row][col] = 0 
+                                        # If no number from 1 to 9 works, the puzzle is unsolvable 
+                                 return False
+                                        # If all cells are filled, the puzzle is solved
+                          return True
+
+# Function to display the Sudoku board
+
+def display_board(board):
+        for row in board:
+                print(row)
+
+# Function to get user input for the Sudoku puzzle
+
+def get_user_input():
+        board = []
+        print("Enter the Sudoku puzzle (9 rows, each row containing 9 numbers, use 0 for empty cells):")
+        for_ in range(9):
+                row =list(map(int,input().split()))
+                board.append(row)
+                return board
+# Get user input for the Sudoku puzzle
+puzzle = get_user_input()
+print("Sudoku puzzle:")
+display_board(puzzle)
+# Solve the Sudoku puzzle
+
+if solve_sudoku(puzzle):
+    print("\nSudoku puzzle solved:")
+    display_board(puzzle)
+else:
+    print("\nNo solution exists for the Sudoku puzzle.")
+```
